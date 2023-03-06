@@ -102,17 +102,15 @@ export const newPassword = async(req: Request, res: Response)=> {
     res.json({"User with new password": user })
 }
 
-// 9. Get joiningYear and userid , and check joiningYear
+// 9. Get joiningYear , and returns users who have the same joiningYear
 export const getUserByJoiningYear = async(req: Request, res: Response)=> {
-    const {id, joiningYear} = req.body;
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findMany({
         where: {
-            id,
-            joiningYear
+            joiningYear: req.params.joiningYear
         }
     })
     try {
-        if(! user?.joiningYear)
+        if(! user)
         res.json({"message": "The user doesn't joined with that date !"})
         else res.json({"message": "The user joined with that date !", "user": user})
     } catch (error) {

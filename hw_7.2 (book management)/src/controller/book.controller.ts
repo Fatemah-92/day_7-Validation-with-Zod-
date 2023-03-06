@@ -18,16 +18,24 @@ export const addBook = async(req: Request, res: Response)=> {
 export const getBooks = async(req: Request, res: Response)=> {
     const books = await prisma.book.findMany({
         select: {
-            id: true,
             name: true,
-            user: {
+            genre: true,
+            id: true,
+            users: {
                 select: {
-                    id: true,
-                    username: true
+                    user: {
+                        select: {
+                            username: true
+                        }
+                    }
                 }
             }
-
         }
     })
-    res.json({"books": books})
+    try {
+        if(books)
+        res.json({"Books List": books})
+    } catch (error) {
+        res.json(error)
+    }
 }

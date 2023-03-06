@@ -17,17 +17,24 @@ export const addUser = async(req: Request, res: Response)=> {
 export const getUsers = async(req: Request, res: Response)=> {
     const users = await prisma.user.findMany({
         select: {
-            id: true,
             username: true,
+            // id: true,
             books: {
                 select: {
-                    id: true,
-                    name: true,
-                    genre: true
+                    book: {
+                        select: {
+                            name: true,
+                            genre: true
+                        }
+                    }
                 }
             }
-
         }
     })
-    res.json({"users": users})
+    try {
+        if(users)
+        res.json({"Users List": users})
+    } catch (error) {
+        res.json(error)
+    }
 }

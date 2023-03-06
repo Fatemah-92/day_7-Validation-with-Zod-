@@ -30,7 +30,7 @@ route.get('/login', login);
 route.put('/newPassword', newPassword);
 
 // 9. Get joiningYear and userid , and check joiningYear
-route.get('/getUserByJoiningYear', getUserByJoiningYear);
+route.get('/JoiningYear/:joiningYear', getUserByJoiningYear);
 
 // 10. Get users by joiningYear in that date or after
 route.get('/JoiningYearOrAfter/:joiningYear', JoiningYearOrAfter);
